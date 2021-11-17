@@ -28,7 +28,7 @@ const server = express();
 //   // await unirest.post('https://chat.googleapis.com/v1/spaces/' + {ROOM-ID} + '/messages')
 // }
 
-app.post("/", (req, res) => {
+server.post("/", (req, res) => {
   const { space, type, message } = req.body || {};
 
   if (type === "ADDED_TO_SPACE" && space.type === "ROOM") {
