@@ -4,53 +4,50 @@ const { google } = require("googleapis");
 const keys = require("./chatbot-demo-332411-af85b0669ad7.json");
 
 const server = express();
-// server.use(cors())
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 
 const PORT = process.env.PORT || 3000;
 
-// const getJWT = async () => {
-//   let jwtClient = new google.auth.JWT(
-//     keys.client_email,
-//     null,
-//     keys.private_key,
-//     ['https://www.googleapis.com/auth/chat.bot']
-//   );
-
-//   await jwtClient.authorize((err, tokens) => {
-//     if (err) return null;
-//     return tokens.access_token;
-//   });
-// }
-
-// const postMessage = async count => {
-//   const token = await getJWT()
-
-//   if (!token)
-//     return null
-
-//   // await unirest.post('https://chat.googleapis.com/v1/spaces/' + {ROOM-ID} + '/messages')
-// }
+const commands = [
+  { name: "help", des: "Hướng dẫn sử dụng" },
+  { name: "about me", des: "Thông tin User" },
+  { name: "cư dân", des: "Cư dân VMO Homepage" },
+  { name: "documents", des: "Văn bản nội bộ" },
+  { name: "isms", des: "Kết quả test ISMS" },
+  { name: "isms test", des: "Làm test ISMS" },
+  { name: "people", des: "Danh sách cư dân VMO" },
+  { name: "birthday", des: "Sinh nhật cư dân VMO" },
+  { name: "wifi", des: "Thông tin Wifi" },
+  { name: "communities", des: "Các cộng đồng" },
+  { name: "contacts", des: "Thông tin liên lạc" },
+  { name: "radio", des: "VMO Radio" },
+  { name: "homies", des: "VMO's Homies" },
+  { name: "slide templates", des: "VMO Slide Templates" },
+  { name: "organization", des: "Sơ đồ tổ chức VMO" },
+]
 
 server.get("/", (req, res) => {
   res.send("Rook Bot Online");
 });
 
 server.post("/", (req, res) => {
+  console.log(">> Body:", req.body)
   const { space, type, message } = req.body || {};
 
   if (type === "ADDED_TO_SPACE" && space.type === "ROOM") {
-    res.send({ text: `Thanks for adding me to ${space.displayName}` });
+    return res.send({
+      text: `Hello \`\`\`${space.displayName}\`\`\`, this is Rook 💪\nType \`\`\`help\`\`\` để biết mình làm được những gì nha.`,
+    });
   } else if (type === "MESSAGE") {
-    res.send({
+    return res.send({
       cards: [
         {
           header: {
             title: "Hello Cư dân 👋",
-            subtitle: "pizzabot@example.com",
-            // imageUrl: "https://goo.gl/aeDtrS",
-            // imageStyle: "IMAGE"
+            // subtitle: "pizzabot@example.com",
+            imageUrl: "https://goo.gl/aeDtrS",
+            imageStyle: "IMAGE"
           },
         },    
         {
@@ -82,6 +79,8 @@ server.post("/", (req, res) => {
         },
       ],
     });
+  } else {
+    res.send({ text: "Chịu ạ 👎" })
   }
 });
 
