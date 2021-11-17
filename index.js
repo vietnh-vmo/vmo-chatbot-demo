@@ -1,5 +1,5 @@
 const express = require("express");
-const unirest = require('unirest');
+const unirest = require("unirest");
 const { google } = require("googleapis");
 const keys = require("./chatbot-demo-332411-af85b0669ad7.json");
 
@@ -28,15 +28,13 @@ const server = express();
 //   // await unirest.post('https://chat.googleapis.com/v1/spaces/' + {ROOM-ID} + '/messages')
 // }
 
-server.post("/", (req, res) => {
-  console.log(req)
+app.post("/", (req, res) => {
+  const { space, type, message } = req.body || {};
 
-  if (req.body.type === "MESSAGE") {
-    return res.json({
-      text: "sleeping...",
-    })
+  if (type === "ADDED_TO_SPACE" && space.type === "ROOM") {
+    res.send({ text: `Thanks for adding me to ${space.displayName}` });
   }
-})
+});
 
 server.listen(80, () => {
   console.log(">> Server online | 80");
