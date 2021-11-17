@@ -4,6 +4,10 @@ const { google } = require("googleapis");
 const keys = require("./chatbot-demo-332411-af85b0669ad7.json");
 
 const server = express();
+server.use(cors())
+server.use(express.json())
+server.use(express.urlencoded({ extended: true }))
+
 const PORT = process.env.PORT || 3000
 
 // const getJWT = async () => {
