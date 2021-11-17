@@ -36,6 +36,6 @@ server.post("/", (req, res) => {
   }
 });
 
-server.listen(80, () => {
-  console.log(">> Server online | 80");
+server.listen(3000, () => {
+  console.log(">> Server online | 3000");
 });
