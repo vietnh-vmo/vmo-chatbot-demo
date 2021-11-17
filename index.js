@@ -61,7 +61,7 @@ const getReply = (space, message) => {
         }
       ]
     })
-    console.log(payload)
+    console.log(payload.cards[0].sections[0].widgets[0])
     return payload
   } else if (cmd.name === "about me") {
     const user = message.sender
