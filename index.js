@@ -35,7 +35,7 @@ server.get("/", (req, res) => {
 
 server.post("/", (req, res) => {
   const { space, type } = req.body || {};
-  console.log(req)
+  console.log(">> Body", req.body)
   res.send({ text: `space: ${space}, type: ${type}` });
 });
 
