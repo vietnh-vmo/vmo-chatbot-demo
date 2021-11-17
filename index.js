@@ -35,7 +35,7 @@ const getReply = (space, message) => {
   }
 
   const cmd = commands.find(command => command.name === msg)
-  console.log(">> cmd", cmd)
+
   if (!cmd) return null
 
   if (cmd.name === "help") {
@@ -54,10 +54,11 @@ const getReply = (space, message) => {
       payload.cards[0].sections[0].widgets.push({
         keyValue: {
           content: String(command.name),
-          bottomLable: String(command.name),
+          bottomLable: String(command.des),
         }
       })
     })
+    console.log(payload)
     return payload
   } else if (cmd.name === "about me") {
     const user = message.sender
