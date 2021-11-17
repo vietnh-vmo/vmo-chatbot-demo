@@ -154,12 +154,12 @@ server.post("/", (req, res) => {
     const reply = getReply(space, message)
 
     if (!reply)
-      return res.send({ text: "Chịu ạ 👎\nType \`help\` please." })
+      return res.send({ text: "?" })
 
     return res.send(reply)
-  } else {
-    return res.send({ text: "Chịu ạ 👎\nType \`help\` please." })
   }
+
+  return res.send({ text: "👎" })
 });
 
 server.listen(PORT, () => {
