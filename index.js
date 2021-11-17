@@ -37,7 +37,7 @@ server.get("/", (req, res) => {
   res.send("Rook Bot Online")
 })
 
-server.post("/", (req, res) => {
+server.post("/asdasd", (req, res) => {
   const { space, type } = req.body || {};
   console.log(">> Body", req.body)
   res.send({ text: `space: ${space}, type: ${type}` });
