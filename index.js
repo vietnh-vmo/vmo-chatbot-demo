@@ -40,7 +40,23 @@ server.get("/", (req, res) => {
 server.post("/", (req, res) => {
   const { space, type } = req.body || {};
   console.log(">> Body", req.body)
-  res.send({ text: `space: ${space}, type: ${type}` });
+  res.send({
+    cards: [
+      {
+        sections: [
+          {
+            widgets: [
+              {
+                textParagraph: {
+                  text: "<b>Roses</b> are <font color=\"#ff0000\">red</font>,<br><i>Violets</i> are <font color=\"#0000ff\">blue</font>"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  });
 });
 
 server.listen(PORT, () => {
