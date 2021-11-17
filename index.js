@@ -55,8 +55,9 @@ const getReply = (space, message) => {
         ...payload.cards[0].sections[0].widgets,
         {
           keyValue: {
+            topLabel: String(command.des),
             content: String(command.name),
-            bottomLable: String(command.des),
+            // bottomLable: String(command.des),
           }
         }
       ]
