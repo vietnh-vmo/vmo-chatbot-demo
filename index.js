@@ -28,6 +28,10 @@ const server = express();
 //   // await unirest.post('https://chat.googleapis.com/v1/spaces/' + {ROOM-ID} + '/messages')
 // }
 
+server.get("/", (req, res) => {
+  res.send("Rook Bot Online")
+})
+
 server.post("/", (req, res) => {
   const { space, type, message } = req.body || {};
 
