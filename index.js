@@ -42,7 +42,7 @@ const getReply = (space, message) => {
     const payload = {
       cards: [{
         header: {
-          title: "Rook Bot | User Manual",
+          title: "<b>Rook Bot | User Manual</b>",
           subtitle: "Hướng dẫn sử dụng"
         },
         sections: [
@@ -55,14 +55,12 @@ const getReply = (space, message) => {
         ...payload.cards[0].sections[0].widgets,
         {
           keyValue: {
-            topLabel: String(command.des),
-            content: String(command.name),
-            // bottomLable: String(command.des),
+            topLabel: `>> ${command.name}`,
+            content: String(command.des),
           }
         }
       ]
     })
-    console.log(payload.cards[0].sections[0].widgets[0])
     return payload
   } else if (cmd.name === "about me") {
     const user = message.sender
