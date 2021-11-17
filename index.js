@@ -140,11 +140,15 @@ server.get("/", (req, res) => {
 
 server.post("/", (req, res) => {
   console.log(">> Body:", req.body)
-  const { space, type, message } = req.body || {};
+  const { space, type, message, user } = req.body || {};
 
   if (type === "ADDED_TO_SPACE" && space.type === "ROOM") {
     return res.send({
       text: `Hello \`${space.displayName}\`, this is Rook 💪\nType \`help\` to see how I work.`,
+    });
+  } else if (type === "ADDED_TO_SPACE" && space.type === "DM") {
+    return res.send({
+      text: `Hello \`${user.displayName}\`, this is Rook 💪\nType \`help\` to see how I work.`,
     });
   } else if (type === "MESSAGE") {
     const reply = getReply(space, message)
