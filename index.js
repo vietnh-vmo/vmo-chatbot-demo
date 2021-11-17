@@ -5,10 +5,10 @@ const keys = require("./chatbot-demo-332411-af85b0669ad7.json");
 
 const server = express();
 // server.use(cors())
-server.use(express.json())
-server.use(express.urlencoded({ extended: true }))
+server.use(express.json());
+server.use(express.urlencoded({ extended: true }));
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000;
 
 // const getJWT = async () => {
 //   let jwtClient = new google.auth.JWT(
@@ -34,29 +34,53 @@ const PORT = process.env.PORT || 3000
 // }
 
 server.get("/", (req, res) => {
-  res.send("Rook Bot Online")
-})
+  res.send("Rook Bot Online");
+});
 
 server.post("/", (req, res) => {
-  const { space, type } = req.body || {};
-  console.log(">> Body", req.body)
-  res.send({
-    cards: [
-      {
-        sections: [
-          {
-            widgets: [
-              {
-                textParagraph: {
-                  text: "<b>Roses</b> are <font color=\"#ff0000\">red</font>,<br><i>Violets</i> are <font color=\"#0000ff\">blue</font>"
-                }
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  });
+  const { space, type, message } = req.body || {};
+
+  if (type === "ADDED_TO_SPACE" && space.type === "ROOM") {
+    res.send({ text: `Thanks for adding me to ${space.displayName}` });
+  } else if (type === "MESSAGE") {
+    fetch(
+      `https://api.giphy.com/v1/gifs/random?api_key=YOUR_GIPHY_API_KEY&tag=${message.text}&rating=G`
+    )
+      .then((response) => response.json())
+      .then((json) =>
+        res.send({
+          cards: [
+            {
+              sections: [
+                {
+                  widgets: [
+                    {
+                      image: {
+                        imageUrl: json.data.images.fixed_height_small.url,
+                      },
+                    },
+                    {
+                      buttons: [
+                        {
+                          textButton: {
+                            text: "View on GIPHY",
+                            onClick: {
+                              openLink: {
+                                url: json.data.url,
+                              },
+                            },
+                          },
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        })
+      );
+  }
 });
 
 server.listen(PORT, () => {
