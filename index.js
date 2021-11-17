@@ -4,6 +4,7 @@ const { google } = require("googleapis");
 const keys = require("./chatbot-demo-332411-af85b0669ad7.json");
 
 const server = express();
+const PORT = process.env.PORT || 3000
 
 // const getJWT = async () => {
 //   let jwtClient = new google.auth.JWT(
@@ -40,6 +41,6 @@ server.post("/", (req, res) => {
   }
 });
 
-server.listen(3000, () => {
-  console.log(">> Server online | 3000");
+server.listen(PORT, () => {
+  console.log(`>> Server online | ${PORT}`);
 });
