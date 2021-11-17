@@ -34,11 +34,9 @@ server.get("/", (req, res) => {
 })
 
 server.post("/", (req, res) => {
-  const { space, type, message } = req.body || {};
+  const { space, type } = req.body || {};
 
-  if (type === "ADDED_TO_SPACE" && space.type === "ROOM") {
-    res.send({ text: `Thanks for adding me to ${space.displayName}` });
-  }
+  res.send({ req });
 });
 
 server.listen(PORT, () => {
