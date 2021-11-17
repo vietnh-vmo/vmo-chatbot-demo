@@ -141,17 +141,17 @@ server.post("/", (req, res) => {
 
   if (type === "ADDED_TO_SPACE" && space.type === "ROOM") {
     return res.send({
-      text: `Hello \`\`\`${space.displayName}\`\`\`, this is Rook 💪\nType \`\`\`help\`\`\` để biết mình làm được những gì nha.`,
+      text: `Hello \`${space.displayName}\`, this is Rook 💪\nType \`help\` để biết mình làm được những gì nha.`,
     });
   } else if (type === "MESSAGE") {
     const reply = getReply(space, message)
 
     if (!reply)
-      return res.send({ text: "Tình hình là có bug rồi :)" })
+      return res.send({ text: "Chịu ạ 👎\nType \`help\` please." })
 
     return res.send(reply)
   } else {
-    return res.send({ text: "Chịu ạ 👎" })
+    return res.send({ text: "Chịu ạ 👎\nType \`help\` please." })
   }
 });
 
