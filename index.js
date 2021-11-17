@@ -51,12 +51,15 @@ const getReply = (space, message) => {
       }]
     }
     commands.forEach(command => {
-      payload.cards[0].sections[0].widgets.push({
-        keyValue: {
-          content: String(command.name),
-          bottomLable: String(command.des),
+      payload.cards[0].sections[0].widgets = [
+        ...payload.cards[0].sections[0].widgets,
+        {
+          keyValue: {
+            content: String(command.name),
+            bottomLable: String(command.des),
+          }
         }
-      })
+      ]
     })
     console.log(payload)
     return payload
