@@ -35,8 +35,8 @@ server.get("/", (req, res) => {
 
 server.post("/", (req, res) => {
   const { space, type } = req.body || {};
-
-  res.send({ req });
+  console.log(req)
+  res.send({ text: `space: ${space}, type: ${type}` });
 });
 
 server.listen(PORT, () => {
