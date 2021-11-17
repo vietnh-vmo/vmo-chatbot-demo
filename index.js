@@ -144,11 +144,11 @@ server.post("/", (req, res) => {
 
   if (type === "ADDED_TO_SPACE" && space.type === "ROOM") {
     return res.send({
-      text: `Hello \`${space.displayName}\`, this is Rook 💪\nType \`help\` to see how I work.`,
+      text: `Hello *${space.displayName}*, this is Rook 💪\nType \`help\` to see how I work.`,
     });
   } else if (type === "ADDED_TO_SPACE" && space.type === "DM") {
     return res.send({
-      text: `Hello \`${user.displayName}\`, this is Rook 💪\nType \`help\` to see how I work.`,
+      text: `Hello *${user.displayName}*, this is Rook 💪\nType \`help\` to see how I work.`,
     });
   } else if (type === "MESSAGE") {
     const reply = getReply(space, message)
