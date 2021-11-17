@@ -1,6 +1,5 @@
 const express = require("express");
 const unirest = require("unirest");
-const fetch = require("node-fetch");
 const { google } = require("googleapis");
 const keys = require("./chatbot-demo-332411-af85b0669ad7.json");
 
@@ -44,43 +43,45 @@ server.post("/", (req, res) => {
   if (type === "ADDED_TO_SPACE" && space.type === "ROOM") {
     res.send({ text: `Thanks for adding me to ${space.displayName}` });
   } else if (type === "MESSAGE") {
-    fetch(
-      `https://api.giphy.com/v1/gifs/random?api_key=YOUR_GIPHY_API_KEY&tag=${message.text}&rating=G`
-    )
-      .then((response) => response.json())
-      .then((json) =>
-        res.send({
-          cards: [
+    res.send({
+      cards: [
+        {
+          header: {
+            title: "Hello Cư dân 👋",
+            subtitle: "pizzabot@example.com",
+            // imageUrl: "https://goo.gl/aeDtrS",
+            // imageStyle: "IMAGE"
+          },
+        },    
+        {
+          sections: [
             {
-              sections: [
+              widgets: [
+                // {
+                //   image: {
+                //     imageUrl: json.data.images.fixed_height_small.url,
+                //   },
+                // },
                 {
-                  widgets: [
+                  buttons: [
                     {
-                      image: {
-                        imageUrl: json.data.images.fixed_height_small.url,
-                      },
-                    },
-                    {
-                      buttons: [
-                        {
-                          textButton: {
-                            text: "View on GIPHY",
-                            onClick: {
-                              openLink: {
-                                url: json.data.url,
-                              },
-                            },
+                      textButton: {
+                        text: "Cư dân",
+                        onClick: {
+                          openLink: {
+                            url: "https://docs.google.com/spreadsheets/u/2/d/e/2PACX-1vTXynV48msVH15QI5SQfEZMq0QK9gIPZy2giyeZRbMMpQwCy1ExXn6Z_SN2SLGPJJYogppsMcRcmaph/pubhtml#",
                           },
                         },
-                      ],
+                      },
                     },
                   ],
                 },
               ],
             },
           ],
-        })
-      );
+        },
+      ],
+    });
   }
 });
 
