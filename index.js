@@ -35,7 +35,7 @@ const getReply = (space, message) => {
   }
 
   const cmd = commands.find(command => command.name === msg)
-
+  console.log(">> cmd", cmd)
   if (!cmd) return null
 
   if (cmd.name === "help") {
@@ -136,7 +136,7 @@ server.get("/", (req, res) => {
 });
 
 server.post("/", (req, res) => {
-  console.log(">> Body:", req.body)
+  // console.log(">> Body:", req.body)
   const { space, type, message } = req.body || {};
 
   if (type === "ADDED_TO_SPACE" && space.type === "ROOM") {
