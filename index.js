@@ -135,16 +135,16 @@ const getReply = (space, message) => {
 }
 
 server.get("/", (req, res) => {
-  res.send("Rook Bot Online");
+  res.send("Bot Online");
 });
 
 server.post("/", (req, res) => {
-  // console.log(">> Body:", req.body)
+  console.log(">> Body:", req.body)
   const { space, type, message } = req.body || {};
 
   if (type === "ADDED_TO_SPACE" && space.type === "ROOM") {
     return res.send({
-      text: `Hello \`${space.displayName}\`, this is Rook 💪\nType \`help\` để biết mình làm được những gì nha.`,
+      text: `Hello \`${space.displayName}\`, this is Rook 💪\nType \`help\` to see how I work.`,
     });
   } else if (type === "MESSAGE") {
     const reply = getReply(space, message)
