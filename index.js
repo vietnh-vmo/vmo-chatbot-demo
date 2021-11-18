@@ -10,31 +10,38 @@ server.use(express.urlencoded({ extended: true }));
 const PORT = process.env.PORT || 3000;
 
 const commands = [
-  { name: "help", des: "Hướng dẫn sử dụng", url: "" },
-  { name: "about me", des: "Thông tin User", url: "" },
-  { name: "documents", des: "Tài nguyên các phòng ban", url: "" },
-  { name: "cư dân", des: "Cư dân VMO Homepage", url: "https://docs.google.com/spreadsheets/u/2/d/e/2PACX-1vTXynV48msVH15QI5SQfEZMq0QK9gIPZy2giyeZRbMMpQwCy1ExXn6Z_SN2SLGPJJYogppsMcRcmaph/pubhtml#" },
-  { name: "policy", des: "Quy trình & Quy định", url: "https://drive.google.com/drive/folders/1h3mT2pLrKjsYUy7Igzw1NhiI6kVDygo3" },
-  { name: "training", des: "Tài nguyên đào tạo", url: "https://drive.google.com/drive/folders/0AA1jNUkTgVkUUk9PVA" },
-  { name: "radio", des: "VMO Radio", url: "https://docs.google.com/forms/d/e/1FAIpQLScnZTCuL3thVYIyaAgQq4OjFrBEzR9O1bQUlNJvuspUOD_wGw/viewform" },
-  { name: "homies", des: "VMO's Homies", url: "https://docs.google.com/forms/d/e/1FAIpQLSf3MGxsIR2q8p8aOMmrGJeuXBNWJzhSYG17c-CDk7-vCK3kPQ/viewform" },
-  { name: "slide templates", des: "VMO Slide Templates", url: "https://docs.google.com/presentation/u/0/?ftv=1&tgif=d" },
-  { name: "shorten link", des: "Rút gọn Link", url: "https://vmo.link/" },
+  { slash: "1", name: "help", des: "Hướng dẫn sử dụng", url: "" },
+  { slash: "2", name: "about me", des: "Thông tin User", url: "" },
+  { slash: "4", name: "documents", des: "Tài nguyên các phòng ban", url: "" },
+  { slash: "3", name: "cư dân", des: "Cư dân VMO Homepage", url: "https://docs.google.com/spreadsheets/u/2/d/e/2PACX-1vTXynV48msVH15QI5SQfEZMq0QK9gIPZy2giyeZRbMMpQwCy1ExXn6Z_SN2SLGPJJYogppsMcRcmaph/pubhtml#" },
+  { slash: "5", name: "policy", des: "Quy trình & Quy định", url: "https://drive.google.com/drive/folders/1h3mT2pLrKjsYUy7Igzw1NhiI6kVDygo3" },
+  { slash: "6", name: "training", des: "Tài nguyên đào tạo", url: "https://drive.google.com/drive/folders/0AA1jNUkTgVkUUk9PVA" },
+  { slash: "7", name: "radio", des: "VMO Radio", url: "https://docs.google.com/forms/d/e/1FAIpQLScnZTCuL3thVYIyaAgQq4OjFrBEzR9O1bQUlNJvuspUOD_wGw/viewform" },
+  { slash: "8", name: "homies", des: "VMO's Homies", url: "https://docs.google.com/forms/d/e/1FAIpQLSf3MGxsIR2q8p8aOMmrGJeuXBNWJzhSYG17c-CDk7-vCK3kPQ/viewform" },
+  { slash: "9", name: "slide templates", des: "VMO Slide Templates", url: "https://docs.google.com/presentation/u/0/?ftv=1&tgif=d" },
 ]
 
 const getReply = (space, message) => {
-  let msg = String(message.text.replace(/^\s+|\s+$/gm, ''))
+  let msg = "", slash = ""
 
-  if (msg.includes("@Rook")) {
-    if (msg.startsWith("@Rook"))
-      msg = msg.split("@Rook")[1].trim()
-    else if (msg.endsWith("@Rook"))
-      msg = msg.split("@Rook")[0].trim()
-    else
-      return null
+  if (message.slashCommand) {
+    slash = String(message.slashCommand.commandId)
+  } else {
+    msg = String(message.text.replace(/^\s+|\s+$/gm, ''))
+
+    if (msg.includes("@Rook")) {
+      if (msg.startsWith("@Rook"))
+        msg = msg.split("@Rook")[1].trim()
+      else if (msg.endsWith("@Rook"))
+        msg = msg.split("@Rook")[0].trim()
+      else
+        return null
+    }
   }
 
-  const cmd = commands.find(command => command.name === msg)
+  const cmd = !!slash
+    ? commands.find(command => command.slash === slash)
+    : commands.find(command => command.name === msg)
 
   if (!cmd) return null
 
